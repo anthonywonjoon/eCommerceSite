@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap');
+
+body {
+    background-image: url("https://cdn.discordapp.com/attachments/802886742939009026/910822452710473758/110721_Fall2021_Welcome_Meeting.jpg");
+    width: 100%;
+    font-family: 'Signika Negative', sans-serif;
+}
+
+.nav_bar {
+    width: 99%;
+    background-color: white;
+    height: 75px;
+    color: #665AA5;
+    
+}
+
+.nav_bar a {
+    text-decoration: none;
+    color: #665AA5;
+}
+
+.about_ig_header {
+    text-align: center;
+}
+
+
+
+.about_body {
+    text-align: center;
+}
+
+.about_body img {
+    width: 250px;
+    height:300px;
+}
+
+.barrier{
+    background:#857BB7; 
+    height: 10px;
+}

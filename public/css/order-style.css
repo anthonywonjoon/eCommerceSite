@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap');
+
+body {
+    background-image: url("https://cdn.discordapp.com/attachments/802886742939009026/910823801799991356/Untitled_Artwork.jpg");
+    width: 100%;
+    font-family: 'Signika Negative', sans-serif;
+}
+
+img {
+    height: 500px;
+    width: 450px;
+}
+
+.order_message {
+    width: 100%;
+    text-align: center;
+}
+
+.order_redirect {
+    width: 100%;
+    text-align: center;
+}

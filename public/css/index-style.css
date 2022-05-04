@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap');
+
+body {
+    background: url("https://cdn.discordapp.com/attachments/802886742939009026/910823801799991356/Untitled_Artwork.jpg");
+    font-family: 'Signika Negative', sans-serif;
+}
+
+img {
+    height: 500px;
+    width: 450px;
+}
+
+.nav_bar {
+    width: 100%;
+    background-color: white;
+    height: 50px;
+}
+
+.nav_bar a {
+    text-decoration: none;
+    color: #665AA5;
+}
+
+.index_body {
+    width: 100%;
+    text-align: center;
+}
+
+.index_pup {
+    width: 100%;
+    text-align: center;
+}

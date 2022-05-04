@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./product_data.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./css/index-style.css">
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <table class="nav_bar">
+            <th><a href="./index.html">Home</a></th>
+            <th><a href="./about.html">About</a></th>
+            <th><a href="./store.html">Store</a></th>
+            <script>
+                let params = (new URL(document.location)).searchParams; 
+                if (params.has("user")){
+                    document.write(`<th>${params.get("user")}</th>`);
+                } else {
+                    document.write('<th><a href="./login.html">Log In</a></th>');
+                }
+            </script>
+        </table>
+    </nav>
+    <div class="index_body">
+        <h1>Welcome to the PupSupport Store!</h1>
+        <p>PupSupport aims to break the barriers that college students face with their mental health and ultimately help their community sustain and develop healthy mental health skills.</p>
+    </div>
+    <div class="index_pup">
+        <a href='./store.html'><img src="https://cdn.discordapp.com/attachments/802886742939009026/937880892712575006/Untitled_Artwork_2.png"></a>
+        <h3>Click the hungry Pup to enter the store!</h3>
+    </div>
+    
+</body>
+</html>

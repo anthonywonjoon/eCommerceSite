@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="./products_data.js"></script>
+    <link rel="stylesheet" href="./css/store-style.css">
+    <title>Document</title>
+</head>
+<script>
+    
+    /* 
+    * function -- validates whether inputted values are acceptable, if not, sends errors
+    * params q -- value that is being tested
+    */ 
+    function isNonNegInt(q, return_errors = false) {
+            errors = []; //Assume no errors at first
+
+            if (q == ''){
+                q = 0;
+            } else if (isNaN(q) == true){
+                errors.push('<font color="red">Not a number!</font>');
+            } else if (q < 0){
+                errors.push('<font color="red">Negative value!</font>');
+            } else if (parseInt(q) != q){
+                errors.push('<font color="red">Not an integer!</font>');
+            } 
+            console.log(typeof(q));
+            return return_errors ? errors : (errors.length == 0);
+        }
+    
+    /*
+    * function -- checks whether the input has no value, or a correct value
+    * params theTextbox -- the input box value that is being tested
+    */
+    function checkQuantityTextbox(theTextbox) {//If there are no errors and textbox field is empty, then display 'Quantity' above the textbox
+        errs = isNonNegInt(theTextbox.value, true); 
+        if (errs.length == 0){
+            errs = ['You want:'];//If a valid entry of quantity is inputted, then display 'You want:' above the textbox
+        } else if (theTextbox.value.trim() == '') {
+            errs = ['Quantity'];
+        }
+        document.getElementById(theTextbox.name + '_label').innerHTML = errs.join(", ");
+    }
+
+    /*
+    * action for if data is sent back from the server due to failing validation
+    */
+    window.onload = function () {
+            let params = (new URL(document.location)).searchParams; //Get the query string which has the form data
+            if (params.has('purchase_submit')) {
+                stock_error = false; // assume no stock errors
+                has_errors = false; // assume quantities are valid in the beginning
+                total_qty = 0; // need to check if something was selected so we will look if the total > 0
+                for (i = 0; i < products_array.length; i++) {
+                    if (params.has(`quantity${i}`)) {
+                        a_qty = params.get(`quantity${i}`);
+                        // make textboxes sticky
+                        product_form[`quantity${i}`].value = a_qty;
+                        total_qty += a_qty;
+                        if (!isNonNegInt(a_qty)) {
+                            has_errors = true; 
+                            checkQuantityTextbox(product_form[`quantity${i}`]); //show where the error is
+                        }
+                        if (a_qty > products_array[i]['quantity_available']){
+                            stock_error = true;
+                        }
+                    }
+                }
+
+                if (has_errors) { // quantity inputted was not valid
+                    alert("Please enter only valid quantities!"); // alert user to ONLY enter valid quantities
+                } else if (total_qty == 0) { // just give a general alert
+                    alert("Please select some quantities!"); // alert to enter quantities if textboxes are empty
+                } else if (stock_error){ // alert that items are out of stock
+                    alert("Out of Stock");
+                } else if (params.has('user')){
+                    window.location = `./invoice.html${document.location.search}`;
+                } else {
+                    window.location = `./login.html${document.location.search}`;
+                    window.stop;
+                }
+            }
+            
+        }
+
+</script>
+
+<body>
+    <nav>
+        <table class="nav_bar">
+            <th><a href="./index.html">Home</a></th>
+            <th><a href="./about.html">About</a></th>
+            <th><a href="./store.html">Store</a></th>
+            <script>
+                let params = (new URL(document.location)).searchParams; 
+                if (params.has("user")){
+                    document.write(`<th>${params.get("user")}</th>`);
+                } else {
+                    document.write('<th><a href="./login.html">Log In</a></th>');
+                }
+            </script>
+            
+        </table>
+    </nav>
+    <div class="header">
+        <h1><b>PupSupport Stickers</b></h1>
+    </div>
+    <form name='product_form'action="/purchase" method="POST">
+        <script>
+            if (params.has("user")){
+                document.write(`
+                    <input type="hidden" id="user" name="user" value="${params.get('user')}">
+                `);
+            }
+        </script>
+        <div class="container">
+            <!-- left column of products-->
+            <div class="column_left"> 
+                <script>
+                    for (i = 0; i < products_array.length * 1/3; i++){ // loops through the first third of products to display
+                        document.write(`
+                            <section class='product${i} display'>
+                                <h2>${products_array[i]['product']}</h2> <!-- displays product name -->
+                                <img src="${products_array[i]['image']}"> <!-- displays product image -->
+                                <p>$${products_array[i]['price'].toFixed(2)}</p> <!-- displays product price -->
+                                <p>Stock: ${products_array[i]['quantity_available']}</p> <!-- displays quantity available -->
+                                <label id="quantity${i}_label">Quantity</label>
+                                <input type='text' min='0' value='0' id="quantity${i}" name="quantity${i}" onkeydown="checkQuantityTextbox(this);"> <!-- displays client order box -->    
+                            </section>
+                        `)
+                    }
+                </script>
+            </div>
+            <!-- center column of products-->
+            <div class="column_center"> 
+                <script>
+                    for (i = products_array.length * 1/3; i < products_array.length * 2/3; i++){ // loops through the middle two-thirds of products and displays
+                        document.write(`
+                        <section class='product${i} display'>
+                                <h2>${products_array[i]['product']}</h2> <!-- displays product name -->
+                                <img src="${products_array[i]['image']}"> <!-- displays product image -->
+                                <p>$${products_array[i]['price'].toFixed(2)}</p> <!-- displays product price -->
+                                <p>Stock: ${products_array[i]['quantity_available']}</p> <!-- displays quantity available -->
+                                <label id="quantity${i}_label">Quantity</label>
+                                <input type='text' min='0' value='0' id="quantity${i}" name="quantity${i}" onkeydown="checkQuantityTextbox(this);"> <!-- displays client order box -->    
+                            </section>
+                        `)
+                    }
+                </script>
+            </div>
+            <!-- right column of products-->
+            <div class="column_right"> 
+                <script>
+                    for (i = products_array.length * 2/3; i < products_array.length; i++){ // loops through last third of products and displays
+                        document.write(`
+                        <section class='product${i} display'>
+                                <h2>${products_array[i]['product']}</h2> <!-- displays product name -->
+                                <img src="${products_array[i]['image']}"> <!-- displays product image -->
+                                <p>$${products_array[i]['price'].toFixed(2)}</p> <!-- displays product price -->
+                                <p>Stock: ${products_array[i]['quantity_available']}</p> <!-- displays quantity available -->
+                                <label id="quantity${i}_label">Quantity</label>
+                                <input type='text' min='0' value='0' id="quantity${i}" name="quantity${i}" onkeydown="checkQuantityTextbox(this);"> <!-- displays client order box -->    
+                            </section>
+                        `)
+                    }
+                </script>
+            </div>
+        </div>
+        <br>
+        <br>
+        
+        <div class="store_buttons">
+            <input type="submit" value="Add to Cart" name="purchase_submit"> <!-- submit button for form-->
+            <input type="button" value="Reset Values" 
+                    onclick="
+                        for (i = 0; i < products_array.length; i++){
+                            document.getElementById(`quantity${i}`).value = 0;
+                        }; alert('All Values Reset');
+            "> <!-- button to reset all values -->
+            
+        </div>
+        
+    </form>
+</body>
+</html>

@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap');
+
+body {
+    background-image: url("https://cdn.discordapp.com/attachments/802886742939009026/910823801799991356/Untitled_Artwork.jpg");
+    width: 100%;
+    font-family: 'Signika Negative', sans-serif;
+}
+
+th, td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+.invoice_header {
+    width: 100%;
+    text-align: center;
+}
+
+.invoice_body {
+    padding-top: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+.invoice_table {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    color: black;
+}
+
+.invoice_table th {
+    background-color: #8C5AA5;
+}
+
+.invoice_table td {
+    background-color: white;
+}
+
+.invoice_button {
+    padding-top: 20px;
+}

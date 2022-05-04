@@ -1,0 +1,5 @@
+{
+    "dport":{"username":"Dan Port","password":"portspassword","email":"dport@hawaii.edu"},
+    "kazman":{"username":"Rick Kazman","password":"kazmanpassword","email":"kazman@hawaii.edu"},
+    "itm352":{"username":"ITM352","password":"grader","email":"itm352@hawaii.edu"}
+}
